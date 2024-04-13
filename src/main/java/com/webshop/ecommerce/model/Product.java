@@ -32,6 +32,7 @@ public class Product {
     private Category category;
 
     private String imagePath;
+    private byte[] productImage;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -17,4 +17,8 @@ public class SearchProductRequestResponse {
     private int size;
     private List<Product> products;
     private Page<Product> pages;
+    private String searchString;
+    private List<String> categories;
+    private String sortByPrice;
+    private List<String> types;
 }

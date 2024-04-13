@@ -18,6 +18,7 @@ import static com.webshop.ecommerce.misc.Helpers.saveImage;
 
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin(origins = "http://127.0.0.1:5173/", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}, allowedHeaders = "*")
 public class ProductController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(productRequest));
     }
 
-    @GetMapping("/find-all")
+    @PostMapping("/find-all")
     ResponseEntity<SearchProductRequestResponse> search(@RequestBody SearchProductRequestResponse request) {
         return ResponseEntity.ok(productService.search(request));
     }

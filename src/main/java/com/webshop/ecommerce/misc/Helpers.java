@@ -1,11 +1,17 @@
 package com.webshop.ecommerce.misc;
 
+import com.webshop.ecommerce.dto.SearchProductRequestResponse;
+import com.webshop.ecommerce.model.Product;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Helpers {
 
@@ -21,6 +27,26 @@ public class Helpers {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static SearchProductRequestResponse convertImages(SearchProductRequestResponse requestResponse) {
+
+        String fileUploadPath = ".\\src\\main\\resources\\images\\products";
+
+        List<Product> products = requestResponse.getProducts().stream().map(product -> {
+            Path imagePath = Paths.get(fileUploadPath).resolve(product.getImagePath());
+            try {
+                byte[] imageData = Files.readAllBytes(imagePath);
+                product.setProductImage(imageData);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return product;
+        }).collect(Collectors.toList());
+
+        requestResponse.setProducts(products);
+
+        return requestResponse;
     }
 
 }
